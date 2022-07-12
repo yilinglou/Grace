@@ -1,7 +1,6 @@
 import torch.nn as nn
 from gelu import GELU
 
-
 class DenseLayer(nn.Module):
     "Implements FFN equation."
 

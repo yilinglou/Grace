@@ -2,7 +2,6 @@ from torch import nn
 import torch
 from gelu import GELU
 from SubLayerConnection import SublayerConnection
-from Multihead_Combination import   MultiHeadedCombination
 class GCNN(nn.Module):
     def __init__(self, dmodel):
         super(GCNN ,self).__init__()
@@ -12,7 +11,6 @@ class GCNN(nn.Module):
         self.activate = GELU()
         self.dropout = nn.Dropout(p=0.1)
         self.subconnect = SublayerConnection(dmodel, 0.1)
-        self.com = MultiHeadedCombination(8, dmodel)
         self.lstm = nn.LSTMCell(dmodel, dmodel)
     def forward(self, state, left, inputad):
         #print(state.size(), left.size())

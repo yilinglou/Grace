@@ -1,12 +1,8 @@
 import torch.nn as nn
-
+from gcnn import GCNN
 from Multihead_Attention import MultiHeadedAttention
 from SubLayerConnection import SublayerConnection
 from DenseLayer import DenseLayer
-from ConvolutionForward import ConvolutionLayer
-from Multihead_Combination import MultiHeadedCombination
-from TreeConv import TreeConv
-from gcnn import GCNN
 from LayerNorm import LayerNorm
 
 class TransformerBlock(nn.Module):
@@ -24,16 +20,7 @@ class TransformerBlock(nn.Module):
         """
 
         super().__init__()
-        self.attention1 = MultiHeadedAttention(h=attn_heads, d_model=hidden)
-        self.attention2 = MultiHeadedAttention(h=attn_heads, d_model=hidden)
-        self.combination = MultiHeadedCombination(h=attn_heads, d_model=hidden)
-        self.combination2 = MultiHeadedCombination(h=attn_heads, d_model=hidden)
-        self.feed_forward = DenseLayer(d_model=hidden, d_ff=feed_forward_hidden, dropout=dropout)
-        self.conv_forward = ConvolutionLayer(dmodel=hidden, layernum=hidden)
         self.Tconv_forward = GCNN(dmodel=hidden)
-        self.sublayer1 = SublayerConnection(size=hidden, dropout=dropout)
-        self.sublayer2 = SublayerConnection(size=hidden, dropout=dropout)
-        self.sublayer3 = SublayerConnection(size=hidden, dropout=dropout)
         self.sublayer4 = SublayerConnection(size=hidden, dropout=dropout)
         self.dropout = nn.Dropout(p=dropout)
         self.norm = LayerNorm(hidden)
